@@ -2,6 +2,7 @@
 	"routes" : {
 		"*" : "Home/Index/Main",
 		"404" : "Home/NoRoute/Main",
-		"search/:query" : "Search/Search/Main"
+		"search" : "Search/Search/Main",
+		"search/:query" : "Search/Search/Query"
 	}
 }
