@@ -2,13 +2,10 @@
 
 <div class="container">
   <div class="starter-template">
-    <h1>Ori Starter Template</h1>
-    <p class="lead">
-      If you're reaching this page then Ori appears to be setup correctly.<br>
-      (Databases may not work, but everything else appears fine).<br><br>
-      Not the page you were expecting? <a href="https://github.com/BookOfOrigin/Ori" target="_blank">Click here for Ori documentation</a><br><br>
-      At some point I'd like to replace this page with a system that actually tests and finds problems.
-    </p>
+    <h1>Music search</h1>
+    <div class="form-group col-md-6 col-md-offset-3">
+      <input placeholder="Your favourite song" type="text" class="form-control" id="query">
+    </div>
   </div>
 </div>
 

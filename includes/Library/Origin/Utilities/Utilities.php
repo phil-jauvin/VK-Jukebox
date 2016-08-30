@@ -85,4 +85,39 @@ class Utilities {
 		
 		return false;
 	}
+	
+	public static function PostRequest($url = null, array $parameters = null){
+		$ch = curl_init();
+    $parameters = http_build_query($parameters);
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $parameters);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'VK-Jukebox'); 
+    
+    $server_output = curl_exec ($ch);
+    curl_close ($ch);
+    
+    return $server_output;
+	}
+	
+	public static function GetRequest($url = null, array $parameters = null){
+		$ch = curl_init();
+    
+		$url .= '?';
+		foreach( $parameters as $parameter => $value ){
+			$url .= $parameter.'='.$value.'&';
+		}
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'VK-Jukebox'); 
+    
+    $server_output = curl_exec ($ch);
+    curl_close ($ch);
+    
+    return $server_output;
+	}
+	
 }
