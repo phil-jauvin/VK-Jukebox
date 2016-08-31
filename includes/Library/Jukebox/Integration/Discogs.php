@@ -55,7 +55,22 @@ class Discogs {
       );
     }
     
-    return Utilities::GetRequest($this->baseurl.$route, $parameters);
+    $data = Utilities::GetRequest($this->baseurl.$route, $parameters);
+    return $this->CleanResults($data);
+  }
+  
+  private function CleanResults($data = null){
+    $data = json_decode($data, true);
+    $clean = array();
+    
+    foreach( $data['results'] as $result ){
+      if( $result['type'] == 'master' || $result['type'] == 'artist' ){
+        array_push($clean, $result);
+      }
+    }
+    
+    $data['results'] = $clean;
+    return json_encode($data);
   }
   
   
