@@ -3,6 +3,9 @@
 		"*" : "Home/Index/Main",
 		"404" : "Home/NoRoute/Main",
 		"search" : "Search/Search/Main",
-		"search/:query" : "Search/Search/Query"
+		"search/:query" : "Search/Search/Query",
+		"release/:id" : "Media/Release/Main",
+		"master/:id" : "/release/:id",
+		"artist/:id" : "Media/Artist/Main"
 	}
 }

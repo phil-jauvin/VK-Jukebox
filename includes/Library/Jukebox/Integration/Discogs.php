@@ -22,6 +22,7 @@ class Discogs {
     $this->Token( $token );
   }
   
+  // Populate Credentials from settings.json
   public function Populate(){
     $credentials = Settings::Get('settings')->Values(['discogs']);
     
@@ -40,25 +41,26 @@ class Discogs {
     }
   }
   
-  public function Query($subject, $route = 'database/search'){
-    if( $this->Token() !== null ){
-      $parameters = array(
-        'token' => $this->Token(),
-        'q' => $subject
-      );
-    }
-    else{
-      $parameters = array(
-        'key' => $this->Key(),
-        'secret' => $this->Secret(),
-        'q' => $subject
-      );
-    }
-    
+  // Build payload and query Discogs API Search
+  public function Search($subject, $route = 'database/search'){
+    $parameters = $this->PreformAuth();
+    $parameters['q'] = $subject;
     $data = Utilities::GetRequest($this->baseurl.$route, $parameters);
     return $this->CleanResults($data);
   }
   
+  // Retrieve artist bio and releases
+  public function GetArtist($id){
+    $artist = array();
+    $parameters = $this->PreformAuth();
+    $data = Utilities::GetRequest($this->baseurl.'/artists/'.$id, $parameters);
+    $artist['bio'] = $data;
+    $data = Utilities::GetRequest($this->baseurl.'/artists/'.$id.'/releases', $parameters);
+    $artist['music'] = $this->CleanReleases($data);
+    return $artist;
+  }
+  
+  // Remove anything that isn't a Master release or Arist
   private function CleanResults($data = null){
     $data = json_decode($data, true);
     $clean = array();
@@ -71,6 +73,36 @@ class Discogs {
     
     $data['results'] = $clean;
     return json_encode($data);
+  }
+  
+  private function CleanReleases($data = null){
+    $data = json_decode($data, true);
+    $clean = array();
+    
+    foreach( $data['releases'] as $result ){
+      if( $result['type'] == 'master' ){
+        array_push($clean, $result);
+      }
+    }
+    
+    $data['releases'] = $clean;
+    return json_encode($data);
+  }
+  
+  private function PreformAuth(){
+    if( $this->Token() !== null ){
+      $parameters = array(
+        'token' => $this->Token(),
+      );
+    }
+    else{
+      $parameters = array(
+        'key' => $this->Key(),
+        'secret' => $this->Secret(),
+      );
+    }
+    
+    return $parameters;
   }
   
   
