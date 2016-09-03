@@ -41,23 +41,19 @@ class Discogs {
     }
   }
   
-  // Build payload and query Discogs API Search
-  public function Search($subject, $route = 'database/search'){
-    $parameters = $this->PreformAuth();
-    $parameters['q'] = $subject;
-    $data = Utilities::GetRequest($this->baseurl.$route, $parameters);
-    return $this->CleanResults($data);
+  // Generic API query
+  public function Query($parameters, $route){
+    foreach( $this->PreformAuth() as $key => $value ){
+      $parameters[$key] = $value;
+    }
+    return Utilities::GetRequest($this->baseurl.$route, $parameters);
   }
   
-  // Retrieve artist bio and releases
-  public function GetArtist($id){
-    $artist = array();
-    $parameters = $this->PreformAuth();
-    $data = Utilities::GetRequest($this->baseurl.'/artists/'.$id, $parameters);
-    $artist['bio'] = $data;
-    $data = Utilities::GetRequest($this->baseurl.'/artists/'.$id.'/releases', $parameters);
-    $artist['music'] = $this->CleanReleases($data);
-    return $artist;
+  // Build payload and query Discogs API Search
+  public function Search($subject){
+    $parameters = array('q' => $subject);
+    $data = $this->Query($parameters, 'database/search');
+    return $this->CleanResults($data);
   }
   
   // Remove anything that isn't a Master release or Arist
@@ -75,20 +71,7 @@ class Discogs {
     return json_encode($data);
   }
   
-  private function CleanReleases($data = null){
-    $data = json_decode($data, true);
-    $clean = array();
-    
-    foreach( $data['releases'] as $result ){
-      if( $result['type'] == 'master' ){
-        array_push($clean, $result);
-      }
-    }
-    
-    $data['releases'] = $clean;
-    return json_encode($data);
-  }
-  
+  // Return an array that already contains Auth parameters for request
   private function PreformAuth(){
     if( $this->Token() !== null ){
       $parameters = array(

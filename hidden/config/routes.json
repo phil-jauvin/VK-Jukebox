@@ -4,8 +4,8 @@
 		"404" : "Home/NoRoute/Main",
 		"search" : "Search/Search/Main",
 		"search/:query" : "Search/Search/Query",
-		"release/:id" : "Media/Release/Main",
+		"release/:id" : "Media/Release_CTRL/Main",
 		"master/:id" : "/release/:id",
-		"artist/:id" : "Media/Artist/Main"
+		"artist/:id" : "Media/Artist_CTRL/Main"
 	}
 }

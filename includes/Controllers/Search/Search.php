@@ -22,7 +22,7 @@ class Search {
     $query = urlencode($this->Decode($query));
     $client = new Discogs();
     $client->Populate();
-    Layout::Get()->Assign('response', json_decode($client->Query($query), true) );
+    Layout::Get()->Assign('response', json_decode($client->Search($query), true) );
     Layout::Get()->Display('search.tpl');
   }
   
