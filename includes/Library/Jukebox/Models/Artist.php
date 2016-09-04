@@ -14,6 +14,7 @@ class Artist {
     String as Profile;
     String as Thumb;
     Hash as Releases;
+    Hash as Pagination;
   }
   
   public function __construct($id, $auto_populate = true){
@@ -38,7 +39,8 @@ class Artist {
     
     $releases = $this->GetReleases();
     $releases = json_decode($releases, true);
-    $this->Releases($releases);
+    $this->Releases($releases['releases']);
+    $this->Pagination($releases['pagination']);
   }
   
   // Retrieve artist information
@@ -54,7 +56,7 @@ class Artist {
     $id = $this->ID();
     $client = new Discogs();
     $client->Populate();
-    $data = $client->Query( array(), 'artists/'.$id.'/releases' );
+    $data = $client->Query( array('sort_order' => 'desc'), 'artists/'.$id.'/releases' );
     return $this->CleanReleases($data);
   }
   
