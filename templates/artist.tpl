@@ -4,7 +4,7 @@
 
   <div>
     
-    <div class="row">
+    <div class="row" style="margin-top: 10vh; border-radius: 25px; border: 2px solid lightgray; padding: 20px; ">
       <div class="col-md-2">
         <img class="img-thumbnail" style="height: 150px; width: 150px;" src="{$artist->Thumb()}"></img>
       </div>
@@ -14,7 +14,7 @@
       </div>
     </div>
     
-    <div class="row">
+    <div class="row" style="margin-top: 25vh;">
       {foreach $artist->Releases() as $release}
       <div class="col-sm-3 col-sm-offset-1">
         <div>
