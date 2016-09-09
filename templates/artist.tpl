@@ -18,7 +18,7 @@
       {foreach $artist->Releases() as $release}
       <div class="col-sm-3 col-sm-offset-1">
         <div>
-          <a><img src="{$release['thumb']}" class="img-thumbnail" style="height:150px; width:150px;"></a>
+          <img src="{if !empty($release['thumb'])}{$release['thumb']}{else}/templates/img/default-release.png{/if}" class="img-thumbnail" style="height:150px; width:150px;">
         </div>
         {$release['title']}
       </div>

@@ -7,7 +7,8 @@
 		<meta name="description" content="Origin Example Site">
 		<meta name="author" content="BookOFOrigin">
 		<title>{Settings::Get()->Value(['site', 'title'])}</title>
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/templates/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <link href="/templates/css/starter-template.css" rel="stylesheet">
