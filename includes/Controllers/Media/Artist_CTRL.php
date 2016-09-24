@@ -9,7 +9,6 @@ class Artist_CTRL {
   
 	public function Main($id){
 		$artist = new Artist($id);
-		$artist->Populate();
 		Layout::Get()->Assign('artist', $artist);
 		Layout::Get()->Display('artist.tpl');
 	}
